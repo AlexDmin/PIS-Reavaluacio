@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Exam Groups</string>
+    <string name="button_new_exam_name">New\nexam</string>
+    <string name="button_your_exams">Your\nexams</string>
+    <string name="button_old_exams">Old exams</string>
+    <string name="button_topics">Topics</string>
+    <string name="button_create_topics">New\ntopic</string>
+</resources>
