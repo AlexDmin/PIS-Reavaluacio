@@ -1,8 +1,23 @@
 <resources>
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
     <string name="app_name">Exam Groups</string>
+    <string name="sign_in_text">Sign in</string>
+    <string name="sign_up_text">Sign up</string>
     <string name="button_new_exam_name">New\nexam</string>
     <string name="button_your_exams">Your\nexams</string>
     <string name="button_old_exams">Old exams</string>
     <string name="button_topics">Topics</string>
     <string name="button_create_topics">New\ntopic</string>
+    <string name="button_register_screen">Do not have an account yet? Sing up!</string>
+    <string name="button_view_topics">View topics</string>
+    <string name="textiet_username">\u0020\u0020Username</string>
+    <string name="textiet_password">\u0020\u0020Password</string>
+    <string name="textiet_repeat_password">\u0020\u0020Repeat password</string>
+    <string name="label_exam_name">Name:</string>
+    <string name="label_exam_date">Date:</string>
+    <string name="label_exam_classrooms">Classroom/s:</string>
+    <string name="label_exam_percentage">Value:</string>
+    <string name="label_exam_description">Description:</string>
+    <string name="empty_text">Example</string>
 </resources>

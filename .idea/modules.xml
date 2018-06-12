@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ExamGroups.iml" filepath="$PROJECT_DIR$/ExamGroups.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PIS-Reavaluacio.iml" filepath="$PROJECT_DIR$/PIS-Reavaluacio.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

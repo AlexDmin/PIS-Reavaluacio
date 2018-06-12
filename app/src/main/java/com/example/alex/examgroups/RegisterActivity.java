@@ -1,14 +1,15 @@
 package com.example.alex.examgroups;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import Controller.Controller;
-/**
- * Created by alex on 09/06/2018.
- * Log in screen of the app. Allows the user to log in in the app.
- */
-public class LoginActivity extends AppCompatActivity {
 
+/**
+ * Created by alex on 11/06/2018.
+ * Allows the user to sign up on the app.
+ */
+
+public class RegisterActivity extends AppCompatActivity{
     private Controller controller;
 
     @Override

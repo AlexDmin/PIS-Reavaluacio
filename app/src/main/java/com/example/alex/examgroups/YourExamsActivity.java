@@ -1,14 +1,16 @@
 package com.example.alex.examgroups;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import Controller.Controller;
-/**
- * Created by alex on 09/06/2018.
- * Log in screen of the app. Allows the user to log in in the app.
- */
-public class LoginActivity extends AppCompatActivity {
+import android.support.v7.app.AppCompatActivity;
 
+import Controller.Controller;
+
+/**
+ * Created by alex on 11/06/2018.
+ * Displays a list of the exams the user is currently on.
+ */
+
+public class YourExamsActivity extends AppCompatActivity {
     private Controller controller;
 
     @Override
