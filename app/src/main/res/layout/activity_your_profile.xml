@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/your_total_participations_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/label_total_participations"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/your_total_participations_textView"
+        app:layout_constraintEnd_toStartOf="@+id/your_total_participations_textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/your_total_participations_textView"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="226dp"
+        android:layout_marginEnd="34dp"
+        android:text="@string/empty_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/your_total_participations_label" />
+
+    <TextView
+        android:id="@+id/your_current_exams_textView"
+        android:layout_width="0dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="46dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginTop="45dp"
+        android:text="@string/empty_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/your_total_participations_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/your_current_exams_label"
+        app:layout_constraintTop_toTopOf="@+id/your_username_textView" />
+
+    <TextView
+        android:id="@+id/your_current_exams_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/label_current_exams"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/your_current_exams_textView"
+        app:layout_constraintEnd_toStartOf="@+id/your_current_exams_textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/your_username_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/label_username"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/your_username_textView"
+        app:layout_constraintEnd_toStartOf="@+id/your_username_textView"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/your_username_textView"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
+        android:layout_marginBottom="62dp"
+        android:layout_marginEnd="159dp"
+        android:text="@string/empty_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/your_total_participations_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/your_username_label" />
+
+    <ImageView
+        android:id="@+id/profile_imageView2"
+        android:layout_width="129dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="26dp"
+        android:layout_marginTop="21dp"
+        app:layout_constraintBottom_toTopOf="@+id/your_username_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+</android.support.constraint.ConstraintLayout>
