@@ -20,6 +20,7 @@
     <string name="add_friend">Add friend</string>
     <string name="textiet_username">\u0020\u0020Username</string>
     <string name="textiet_password">\u0020\u0020Password</string>
+    <string name="textiet_email">\u0020\u0020Email</string>
     <string name="textiet_repeat_password">\u0020\u0020Repeat password</string>
     <string name="label_exam_name">Name:</string>
     <string name="label_exam_date">Date:</string>
