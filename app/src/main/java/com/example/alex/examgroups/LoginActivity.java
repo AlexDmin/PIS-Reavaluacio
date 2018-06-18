@@ -13,8 +13,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import Controller.Controller;
+import Model.FirebaseDatabase;
+import Model.User;
+
 /**
  * Created by alex on 09/06/2018.
  * Log in screen of the app. Allows the user to log in in the app.
@@ -24,7 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     private Controller controller;
     private Button registerButton, loginButton;
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private com.google.firebase.database.FirebaseDatabase myBase;
+    private DatabaseReference myRef;
     private TextInputEditText emailET, passwordET;
+    private User user;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -32,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+
 
         emailET = (TextInputEditText) findViewById(R.id.username_textiet);
         passwordET = (TextInputEditText) findViewById(R.id.password_textiet);
@@ -65,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+
                         openMainMenuActivity();
                     } else {
                         Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();

@@ -13,6 +13,4 @@ public class FirebaseDatabase {
     private Controller controller;
     private FirebaseAuth mAuth;
 
-
-
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="profile" type="id">profile</item>
+    <item name="settings" type="id">settings</item>
+    <item name="logout" type="id">logout</item>
+</resources>

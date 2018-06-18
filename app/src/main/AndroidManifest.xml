@@ -20,6 +20,58 @@
         <activity android:name=".RegisterActivity">
 
         </activity>
+
+        <activity android:name=".ExamInfoActivity">
+
+        </activity>
+
+        <activity android:name=".ExamTopicActivity">
+
+        </activity>
+
+        <activity android:name=".ExamTopicsActivity">
+
+        </activity>
+
+        <activity android:name=".InviteActivity">
+
+        </activity>
+
+        <activity android:name=".InviteByNameActivity">
+
+        </activity>
+
+        <activity android:name=".MainMenuActivity">
+
+        </activity>
+
+        <activity android:name=".NewExamActivity">
+
+        </activity>
+
+        <activity android:name=".OldExamsActivity">
+
+        </activity>
+
+        <activity android:name=".ProfileActivity">
+
+        </activity>
+
+        <activity android:name=".SearchByTopicActivity">
+
+        </activity>
+
+        <activity android:name=".SettingsActivity">
+
+        </activity>
+
+        <activity android:name=".YourExamsActivity">
+
+        </activity>
+
+        <activity android:name=".YourProfileActivity">
+
+        </activity>
     </application>
 
 </manifest>
