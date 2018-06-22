@@ -1,16 +1,18 @@
 package Model;
 
 public class User {
-    String username, email, id;
+    String username, email;
+    Integer current_exams, total_exams;
 
     public User(){
 
     }
 
-    public User(String username, String email, String id) {
+    public User(String username, String email, Integer current_exams, Integer total_exams) {
         this.username = username;
         this.email = email;
-        this.id = id;
+        this.current_exams = current_exams;
+        this.total_exams = total_exams;
     }
 
     public String getUsername() {
@@ -29,11 +31,19 @@ public class User {
         this.email = email;
     }
 
-    public String getId() {
-        return id;
+    public Integer getCurrent_exams() {
+        return current_exams;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCurrent_exams(Integer current_exams) {
+        this.current_exams = current_exams;
+    }
+
+    public Integer getTotal_exams() {
+        return total_exams;
+    }
+
+    public void setTotal_exams(Integer total_exams) {
+        this.total_exams = total_exams;
     }
 }

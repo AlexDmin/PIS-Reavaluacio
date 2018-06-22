@@ -17,6 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import Controller.Controller;
 import Model.FirebaseDatabase;
 import Model.User;
@@ -46,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         registerButton.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-        databaseUser = com.google.firebase.database.FirebaseDatabase.getInstance().getReference("User");
+
     }
 
     @Override
@@ -94,18 +97,26 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void openLoginActivity() {
+        finish();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
     public void addUserToNode(){
+        String userID = mAuth.getCurrentUser().getUid();
         String useremail = email.getText().toString().trim();
         String user = username.getText().toString().trim();
-        String id = databaseUser.push().getKey();
 
-        User new_user = new User(user, useremail, id);
 
-        databaseUser.child(id).setValue(new_user);
+        DatabaseReference current_user = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+        Map newPost = new HashMap();
+        newPost.put("Username", user);
+        newPost.put("User email", useremail);
+        newPost.put("Current exams", 0);
+        newPost.put("Total exam participations", 0);
+
+        current_user.setValue(newPost);
     }
 
 }

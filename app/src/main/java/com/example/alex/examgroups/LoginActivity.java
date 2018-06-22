@@ -85,7 +85,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void openMainMenuActivity() {
+        finish();
         Intent intent = new Intent(this, MainMenuActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
@@ -94,5 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
+
 
 }
