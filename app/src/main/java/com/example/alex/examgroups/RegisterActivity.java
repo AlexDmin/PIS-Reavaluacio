@@ -107,7 +107,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String useremail = email.getText().toString().trim();
         String user = username.getText().toString().trim();
 
-
         DatabaseReference current_user = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
 
         Map newPost = new HashMap();

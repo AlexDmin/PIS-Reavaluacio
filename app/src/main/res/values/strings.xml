@@ -17,11 +17,13 @@
     <string name="button_create_exam">Create exam</string>
     <string name="button_invite">Invite</string>
     <string name="button_invite_by_name">Invite by name</string>
+    <string name="button_create_topic">Create topic</string>
     <string name="add_friend">Add friend</string>
     <string name="textiet_username">\u0020\u0020Username</string>
     <string name="textiet_password">\u0020\u0020Password</string>
     <string name="textiet_email">\u0020\u0020Email</string>
     <string name="textiet_repeat_password">\u0020\u0020Repeat password</string>
+    <string name="textiet_new_topic">\u0020\u0020New topic</string>
     <string name="label_exam_name">Name:</string>
     <string name="label_exam_date">Date:</string>
     <string name="label_exam_classrooms">Classroom/s:</string>

@@ -72,6 +72,10 @@
         <activity android:name=".YourProfileActivity">
 
         </activity>
+
+        <activity android:name=".NewTopicActivity">
+
+        </activity>
     </application>
 
 </manifest>

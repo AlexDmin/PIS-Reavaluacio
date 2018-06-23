@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/your_exams_button"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="170dp"
-        android:layout_height="190dp"
+        android:layout_width="0dp"
+        android:layout_height="191dp"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="16dp"
@@ -26,8 +27,8 @@
     <Button
         android:id="@+id/new_exam_button"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="170dp"
-        android:layout_height="190dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
@@ -43,7 +44,7 @@
     <Button
         android:id="@+id/topics_button"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="173dp"
+        android:layout_width="0dp"
         android:layout_height="190dp"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="12dp"
@@ -60,8 +61,8 @@
     <Button
         android:id="@+id/new_topic_button"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="170dp"
-        android:layout_height="190dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="103dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/holo_blue_dark"
@@ -77,7 +78,7 @@
         android:id="@+id/old_exams_button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="0dp"
-        android:layout_height="49dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="34dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
