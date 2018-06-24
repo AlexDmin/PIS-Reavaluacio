@@ -48,28 +48,6 @@ public class NewExamActivity extends AppCompatActivity {
     }
     public void createExam() {
 
-        /*String userID = mAuth.getCurrentUser().getUid();
-        String exam_name = name.getText().toString().trim();
-        String exam_date = date.getText().toString().trim();
-        String exam_value = value.getText().toString().trim();
-        String exam_classroom = classroom.getText().toString().trim();
-        String exam_description = description.getText().toString().trim();
-
-        DatabaseReference new_Exam = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Exams");
-
-        Map newPost = new HashMap();
-        newPost.put("Name", exam_name);
-        newPost.put("Date", exam_date);
-        newPost.put("Value", exam_value);
-        newPost.put("Classroom/s", exam_classroom);
-        newPost.put("Description", exam_description);
-
-        new_Exam.setValue(newPost);
-
-        new_Exam.child("Users").child(userID);
-        Toast.makeText(getApplicationContext(), "Entra", Toast.LENGTH_SHORT).show();
-        */
-
         String userID = mAuth.getCurrentUser().getUid();
         String examName = name.getText().toString().trim();
         String examDate = date.getText().toString().trim();
@@ -89,7 +67,7 @@ public class NewExamActivity extends AppCompatActivity {
 
         newExam.setValue(newPost);
 
-        newExam.child("Users").push().setValue(userID);
+        newExam.child("Users").child(userID).setValue(userID);
     }
 
 }

@@ -116,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         newPost.put("Total exam participations", 0);
 
         current_user.setValue(newPost);
+
     }
 
 }
