@@ -76,6 +76,10 @@
         <activity android:name=".NewTopicActivity">
 
         </activity>
+        <activity android:name=".FriendListActivity">
+
+        </activity>
     </application>
+
 
 </manifest>

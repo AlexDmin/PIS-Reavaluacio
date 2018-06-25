@@ -32,8 +32,11 @@
     <string name="label_username">Username:</string>
     <string name="label_current_exams">Current exams:</string>
     <string name="label_total_participations">Total participations:</string>
+    <string name="label_email">Email:</string>
     <string name="empty_text">Example</string>
     <string name="settings_menu_text">Settings</string>
     <string name="profile_menu_text">Profile</string>
     <string name="logout_menu_text">Log\u0020out</string>
+    <string name="friends_menu_text">Friend\u0020list</string>
+    <string name="text_hint">Empty</string>
 </resources>

@@ -1,7 +1,10 @@
 package com.example.alex.examgroups;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -54,7 +57,7 @@ public class YourExamsActivity extends AppCompatActivity {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     if(ds.child("Users").hasChild(userID)){
                         exam = ds.getValue(Exam.class);
-                        exams.add(exam.getName().toString() + "   " + exam.getDate().toString());
+                        exams.add(exam.getName().toString());
                     }
                 }
                 examsList.setAdapter(adapter);
@@ -65,6 +68,39 @@ public class YourExamsActivity extends AppCompatActivity {
 
             }
         });
+
+        examsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object exam = examsList.getItemAtPosition(position);
+                final String examName = (String)exam;
+                DatabaseReference examRef = db.getReference("Exams");
+                examRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds: dataSnapshot.getChildren()){
+                            if(ds.getKey().equals(examName)){
+                                startTopicsActivity(examName);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    private void startTopicsActivity(String examName) {
+        finish();
+        Intent intent = new Intent(this, ExamInfoActivity.class);
+        Bundle b = new Bundle();
+        b.putString("exam", examName);
+        intent.putExtras(b);
+        startActivity(intent);
 
     }
 

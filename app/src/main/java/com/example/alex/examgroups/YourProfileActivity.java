@@ -26,7 +26,7 @@ import Model.User;
 
 public class YourProfileActivity extends AppCompatActivity {
     private Controller controller;
-    private TextView username, currentExams, totalExams;
+    private TextView username, email;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
     private FirebaseDatabase db;
@@ -37,8 +37,8 @@ public class YourProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_your_profile);
 
         username = (TextView) findViewById(R.id.your_username_textView);
-        currentExams = (TextView) findViewById(R.id.your_current_exams_textView);
-        totalExams = (TextView) findViewById(R.id.your_total_participations_textView);
+        email = (TextView) findViewById(R.id.your_email_textView);
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
@@ -54,11 +54,9 @@ public class YourProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String name = dataSnapshot.child("Username").getValue(String.class);
-                Integer current_exams = dataSnapshot.child("Current exams").getValue(Integer.class);
-                Integer total_exams = dataSnapshot.child("Total exam participations").getValue(Integer.class);
+                String emailS = dataSnapshot.child("User email").getValue(String.class);
                 username.setText(name);
-                currentExams.setText(current_exams.toString());
-                totalExams.setText(total_exams.toString());
+                email.setText(emailS);
             }
 
             @Override

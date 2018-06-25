@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Controller.Controller;
-import Model.FirebaseDatabase;
 import Model.User;
 
 /**
@@ -112,8 +111,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Map newPost = new HashMap();
         newPost.put("Username", user);
         newPost.put("User email", useremail);
-        newPost.put("Current exams", 0);
-        newPost.put("Total exam participations", 0);
 
         current_user.setValue(newPost);
 

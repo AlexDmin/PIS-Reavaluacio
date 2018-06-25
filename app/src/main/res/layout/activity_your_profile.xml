@@ -7,55 +7,28 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/your_total_participations_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:text="@string/label_total_participations"
-        android:textColor="@android:color/background_light"
-        android:textSize="20sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/your_total_participations_textView"
-        app:layout_constraintEnd_toStartOf="@+id/your_total_participations_textView"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/your_total_participations_textView"
-        android:layout_width="0dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="226dp"
-        android:layout_marginEnd="34dp"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/your_total_participations_label" />
-
-    <TextView
-        android:id="@+id/your_current_exams_textView"
-        android:layout_width="0dp"
+        android:id="@+id/your_email_textView"
+        android:layout_width="207dp"
         android:layout_height="29dp"
-        android:layout_marginBottom="46dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginEnd="93dp"
+        android:layout_marginTop="29dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/your_total_participations_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/your_current_exams_label"
-        app:layout_constraintTop_toTopOf="@+id/your_username_textView" />
+        app:layout_constraintStart_toEndOf="@+id/your_email_label"
+        app:layout_constraintTop_toBottomOf="@+id/your_username_textView" />
 
     <TextView
-        android:id="@+id/your_current_exams_label"
-        android:layout_width="wrap_content"
+        android:id="@+id/your_email_label"
+        android:layout_width="57dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="17dp"
+        android:layout_marginEnd="13dp"
         android:layout_marginStart="16dp"
-        android:text="@string/label_current_exams"
+        android:text="@string/label_email"
         android:textColor="@android:color/background_light"
         android:textSize="20sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/your_current_exams_textView"
-        app:layout_constraintEnd_toStartOf="@+id/your_current_exams_textView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/your_email_textView"
+        app:layout_constraintEnd_toStartOf="@+id/your_email_textView"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -74,22 +47,20 @@
     <TextView
         android:id="@+id/your_username_textView"
         android:layout_width="0dp"
-        android:layout_height="31dp"
-        android:layout_marginBottom="62dp"
-        android:layout_marginEnd="159dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="55dp"
+        android:layout_marginTop="46dp"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/your_total_participations_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/your_username_label" />
+        app:layout_constraintStart_toEndOf="@+id/your_username_label"
+        app:layout_constraintTop_toBottomOf="@+id/profile_imageView2" />
 
     <ImageView
         android:id="@+id/profile_imageView2"
         android:layout_width="129dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="26dp"
-        android:layout_marginTop="21dp"
-        app:layout_constraintBottom_toTopOf="@+id/your_username_textView"
+        android:layout_height="120dp"
+        android:layout_marginTop="57dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

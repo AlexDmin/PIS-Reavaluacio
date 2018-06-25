@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
 import Controller.Controller;
-import Model.FirebaseDatabase;
 import Model.User;
 
 /**

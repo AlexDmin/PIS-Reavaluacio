@@ -2,5 +2,6 @@
 <resources>
     <item name="profile" type="id">profile</item>
     <item name="settings" type="id">settings</item>
+    <item name="friends" type="id">friends</item>
     <item name="logout" type="id">logout</item>
 </resources>

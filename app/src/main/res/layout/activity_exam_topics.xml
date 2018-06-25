@@ -10,9 +10,11 @@
         android:id="@+id/exam_topics_ListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:entries="@android:color/background_dark"
+        app:layout_constraintBottom_toTopOf="@+id/add_topic_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exam_topics_textView" />
@@ -23,11 +25,22 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/exam_topics_text"
+        android:text="@string/button_topics"
         android:textColor="@android:color/background_light"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/exam_topics_ListView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/add_topic_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/button_create_topic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exam_topics_ListView" />
 </android.support.constraint.ConstraintLayout>
