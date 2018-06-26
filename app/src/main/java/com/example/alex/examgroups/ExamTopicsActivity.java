@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 import Controller.Controller;
 
+import static android.view.View.GONE;
+
 /**
  * Created by alex on 12/06/2018.
  */
@@ -33,7 +35,7 @@ public class ExamTopicsActivity extends AppCompatActivity{
     private ArrayList<String> topics;
     private ArrayAdapter<String> adapter;
     private EditText topicInput;
-    private String exam;
+    private String exam, previousAct;
     public static boolean active = false;
 
 
@@ -46,6 +48,7 @@ public class ExamTopicsActivity extends AppCompatActivity{
 
         Bundle b = getIntent().getExtras();
         exam = b.getString("exam");
+        previousAct = b.getString("previousAct");
 
         topicsListView = findViewById(R.id.exam_topics_ListView);
         addTopic = findViewById(R.id.add_topic_button);
@@ -53,6 +56,10 @@ public class ExamTopicsActivity extends AppCompatActivity{
         topics = new ArrayList<>();
         adapter = new ArrayAdapter<String>(this, R.layout.exam_info, R.id.exam_info_tv, topics);
         topicInput = new EditText(this);
+
+        if(previousAct.equals("oldExams")){
+            addTopic.setVisibility(GONE);
+        }
 
         DatabaseReference topicsList = db.getReference("Exams").child(exam).child("Topics");
         topicsList.addValueEventListener(new ValueEventListener() {
@@ -153,6 +160,11 @@ public class ExamTopicsActivity extends AppCompatActivity{
             Bundle b = new Bundle();
             b.putString("topic", topicName);
             b.putString("exam", exam);
+            if(previousAct.equals("oldExams")) {
+                b.putString("previousAct", "oldExams");
+            }else{
+                b.putString("previousAct", "yourExams");
+            }
             intent.putExtras(b);
             startActivity(intent);
         }

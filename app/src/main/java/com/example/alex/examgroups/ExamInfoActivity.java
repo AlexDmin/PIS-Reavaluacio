@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +28,11 @@ public class ExamInfoActivity extends AppCompatActivity {
     private Controller controller;
     private TextView name, date, value, classroom, description;
     private Button viewTopics, setExamAsComplete, invite;
-    private String examName;
+    private String examName, previousAct;
     private FirebaseDatabase db;
     private FirebaseAuth mAuth;
     public static boolean active = false;
+    DatabaseReference examRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class ExamInfoActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         examName = b.getString("exam");
+        previousAct = b.getString("previousAct");
+
 
         name = findViewById(R.id.exam_name_textView);
         date = findViewById(R.id.exam_date_textView);
@@ -54,20 +58,25 @@ public class ExamInfoActivity extends AppCompatActivity {
 
         db = FirebaseDatabase.getInstance();
         DatabaseReference adminRef = db.getReference("Exams").child(examName).child("Admin");
-        adminRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.getValue().toString().equals(userID)){
-                    setExamAsComplete.setVisibility(GONE);
-                    invite.setVisibility(GONE);
+        if(active == true) {
+            adminRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.getValue().equals(userID)) {
+                        setExamAsComplete.setVisibility(GONE);
+                        invite.setVisibility(GONE);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
+
+
+
 
         invite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +85,14 @@ public class ExamInfoActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference examRef = db.getReference("Exams").child(examName);
+        if(previousAct.equals("oldExams")) {
+            setExamAsComplete.setVisibility(GONE);
+            invite.setVisibility(GONE);
+            examRef = db.getReference("Old exams").child(examName);
+        }else{
+            examRef = db.getReference("Exams").child(examName);
+        }
+
         examRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -106,6 +122,29 @@ public class ExamInfoActivity extends AppCompatActivity {
             }
         });
 
+        setExamAsComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DatabaseReference fromExams = db.getReference("Exams").child(examName);
+                final DatabaseReference toOldExams = db.getReference().child("Old exams").child(examName);
+
+                fromExams.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        fromExams.child("Admin").setValue("");
+                        toOldExams.setValue(dataSnapshot.getValue());
+                        fromExams.removeValue();
+                        YourExamsActivity.yourExamsActivity.finish();
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
     }
 
     private void openFriendListActivity() {
@@ -125,6 +164,11 @@ public class ExamInfoActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ExamTopicsActivity.class);
             Bundle b = new Bundle();
             b.putString("exam", examName);
+            if(previousAct.equals("oldExams")) {
+                b.putString("previousAct", "oldExams");
+            }else{
+                b.putString("previousAct", "yourExams");
+            }
             intent.putExtras(b);
             startActivity(intent);
         }

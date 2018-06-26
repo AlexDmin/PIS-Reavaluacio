@@ -36,12 +36,14 @@ public class YourExamsActivity extends AppCompatActivity {
     private DatabaseReference examsRef;
     private FirebaseDatabase db;
     private Exam exam;
+    public static YourExamsActivity yourExamsActivity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_exams);
+        yourExamsActivity = this;
 
         exam = new Exam();
         examsList = findViewById(R.id.your_exams_listView);
@@ -103,6 +105,7 @@ public class YourExamsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ExamInfoActivity.class);
             Bundle b = new Bundle();
             b.putString("exam", examName);
+            b.putString("previousAct", "yourExams");
             intent.putExtras(b);
             startActivity(intent);
         }

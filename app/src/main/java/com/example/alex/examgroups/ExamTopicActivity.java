@@ -26,7 +26,7 @@ public class ExamTopicActivity extends AppCompatActivity {
     private TextInputEditText text;
     private Button edit;
     private TextView title;
-    private String topic, exam;
+    private String topic, exam, previousAct;
     public static boolean active = false;
 
     private FirebaseDatabase db;
@@ -41,12 +41,19 @@ public class ExamTopicActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         topic = b.getString("topic");
         exam = b.getString("exam");
+        previousAct = b.getString("previousAct");
+
 
         text = findViewById(R.id.topic_text_iet);
         text.setEnabled(false);
         title = findViewById(R.id.topic_textView);
         edit = findViewById(R.id.edit_text_button);
         db = FirebaseDatabase.getInstance();
+
+        if(previousAct.equals("oldExams")){
+            edit.setVisibility(View.GONE);
+        }
+
         final DatabaseReference topicRef = db.getReference("Exams").child(exam).child("Topics").child(topic);
         topicRef.addValueEventListener(new ValueEventListener() {
             @Override
