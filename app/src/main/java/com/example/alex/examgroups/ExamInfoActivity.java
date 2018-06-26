@@ -28,6 +28,7 @@ public class ExamInfoActivity extends AppCompatActivity {
     private String examName;
     private FirebaseDatabase db;
     private FirebaseAuth mAuth;
+    public static boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +81,28 @@ public class ExamInfoActivity extends AppCompatActivity {
 
 
     private void startTopicsActivity() {
-        finish();
-        Intent intent = new Intent(this, ExamTopicsActivity.class);
-        Bundle b = new Bundle();
-        b.putString("exam", examName);
-        intent.putExtras(b);
-        startActivity(intent);
+        if(!ExamTopicsActivity.getActive() && !ExamTopicActivity.getActive()) {
+            Intent intent = new Intent(this, ExamTopicsActivity.class);
+            Bundle b = new Bundle();
+            b.putString("exam", examName);
+            intent.putExtras(b);
+            startActivity(intent);
+        }
+    }
+
+    public static boolean getActive() {
+        return active;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        active = false;
     }
 }

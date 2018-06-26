@@ -57,7 +57,9 @@ public class YourExamsActivity extends AppCompatActivity {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     if(ds.child("Users").hasChild(userID)){
                         exam = ds.getValue(Exam.class);
-                        exams.add(exam.getName().toString());
+                        if(!exams.contains(exam.getName().toString())){
+                            exams.add(exam.getName().toString());
+                        }
                     }
                 }
                 examsList.setAdapter(adapter);
@@ -96,14 +98,15 @@ public class YourExamsActivity extends AppCompatActivity {
     }
 
     private void startTopicsActivity(String examName) {
-        finish();
-        Intent intent = new Intent(this, ExamInfoActivity.class);
-        Bundle b = new Bundle();
-        b.putString("exam", examName);
-        intent.putExtras(b);
-        startActivity(intent);
-
+        if(!ExamInfoActivity.getActive() && !ExamTopicsActivity.getActive() && !ExamTopicActivity.getActive()){
+            Intent intent = new Intent(this, ExamInfoActivity.class);
+            Bundle b = new Bundle();
+            b.putString("exam", examName);
+            intent.putExtras(b);
+            startActivity(intent);
+        }
     }
+
 
 
 }

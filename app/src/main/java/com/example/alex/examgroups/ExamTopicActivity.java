@@ -27,6 +27,7 @@ public class ExamTopicActivity extends AppCompatActivity {
     private Button edit;
     private TextView title;
     private String topic, exam;
+    public static boolean active = false;
 
     private FirebaseDatabase db;
     private FirebaseAuth mAuth;
@@ -35,6 +36,7 @@ public class ExamTopicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_topic);
+
 
         Bundle b = getIntent().getExtras();
         topic = b.getString("topic");
@@ -75,6 +77,26 @@ public class ExamTopicActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+    public static boolean getActive() {
+        return active;
+    }
+
+    public static void setActive(boolean isactive) {
+        active = isactive;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onStop() {
+        active = false;
+        super.onStop();
 
     }
 }

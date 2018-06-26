@@ -22,7 +22,7 @@
         </activity>
 
         <activity android:name=".ExamInfoActivity">
-
+            android:launchMode = "singleInstance"
         </activity>
 
         <activity android:name=".ExamTopicActivity">
@@ -30,7 +30,7 @@
         </activity>
 
         <activity android:name=".ExamTopicsActivity">
-
+            android:launchMode = "singleInstance"
         </activity>
 
         <activity android:name=".InviteActivity">
@@ -66,15 +66,16 @@
         </activity>
 
         <activity android:name=".YourExamsActivity">
+            android:launchMode = "singleInstance"
 
         </activity>
 
         <activity android:name=".YourProfileActivity">
-
+            android:launchMode = "singleInstance"
         </activity>
 
         <activity android:name=".NewTopicActivity">
-
+            android:launchMode = "singleInstance"
         </activity>
         <activity android:name=".FriendListActivity">
 

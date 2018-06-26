@@ -34,6 +34,8 @@ public class ExamTopicsActivity extends AppCompatActivity{
     private ArrayAdapter<String> adapter;
     private EditText topicInput;
     private String exam;
+    public static boolean active = false;
+
 
     private com.google.firebase.database.FirebaseDatabase db;
 
@@ -73,6 +75,7 @@ public class ExamTopicsActivity extends AppCompatActivity{
         topicsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ExamTopicActivity.setActive(false);
                 Object topic = topicsListView.getItemAtPosition(position);
                 final String topicName = (String)topic;
                 DatabaseReference examRef = db.getReference("Exams").child(exam).child("Topics");
@@ -111,9 +114,8 @@ public class ExamTopicsActivity extends AppCompatActivity{
                         if(!dataSnapshot.hasChild(topicName)){
                             Toast.makeText(getApplicationContext(), "Topic added", Toast.LENGTH_SHORT).show();
                             topicListRef.child(topicName).child("Text").setValue("");
-                            finish();
+                            ExamTopicActivity.setActive(true);
                         }
-
 
                     }
 
@@ -146,13 +148,31 @@ public class ExamTopicsActivity extends AppCompatActivity{
     }
 
     private void startTopicActivity(String topicName) {
-        Intent intent = new Intent(this, ExamTopicActivity.class);
-        Bundle b = new Bundle();
-        b.putString("topic", topicName);
-        b.putString("exam", exam);
-        intent.putExtras(b);
-        startActivity(intent);
+        if (!ExamTopicActivity.getActive()) {
+            Intent intent = new Intent(this, ExamTopicActivity.class);
+            Bundle b = new Bundle();
+            b.putString("topic", topicName);
+            b.putString("exam", exam);
+            intent.putExtras(b);
+            startActivity(intent);
+        }
+
+
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        active = false;
+    }
+
+    public static boolean getActive() {
+        return active;
+    }
 
 }
