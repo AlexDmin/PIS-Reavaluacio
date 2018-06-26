@@ -49,6 +49,9 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
             startActivity(intent);
         }else if(item.getItemId() == R.id.profile) {
             Intent intent = new Intent(this, YourProfileActivity.class);
+            Bundle b = new Bundle();
+            b.putString("previousAct", "MainMenu");
+            intent.putExtras(b);
             startActivity(intent);
         }else if(item.getItemId() == R.id.friends) {
             Intent intent = new Intent(this, FriendListActivity.class);

@@ -2,6 +2,7 @@ package com.example.alex.examgroups;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,23 +47,32 @@ public class YourProfileActivity extends AppCompatActivity {
     private String userName = "";
     private String userkey;
     private Uri pathFile;
+    private String previousAct, userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_profile);
 
+        Bundle b = getIntent().getExtras();
+        previousAct = b.getString("previousAct");
+
         username = (TextView) findViewById(R.id.your_username_textView);
         email = (TextView) findViewById(R.id.your_email_textView);
         profilePic = findViewById(R.id.profile_imageView);
 
         mAuth = FirebaseAuth.getInstance();
-        userkey = mAuth.getCurrentUser().getUid();
         db = FirebaseDatabase.getInstance();
         userRef= db.getReferenceFromUrl("https://exam-groups.firebaseio.com/");
         retrieveUserData();
 
-        String userID = mAuth.getCurrentUser().getUid();
+        if(previousAct.equals("MainMenu")) {
+            userkey = mAuth.getCurrentUser().getUid();
+        }else{
+            userkey = previousAct;
+        }
+        userID = mAuth.getCurrentUser().getUid();
+
         DatabaseReference user = db.getReference("User").child(userID).child("Username");
         user.addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,14 +87,33 @@ public class YourProfileActivity extends AppCompatActivity {
         });
 
         storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = FirebaseStorage.getInstance().getReference().child("images/"+ userkey + ".jpg");
+
+        if(profileRef != null) {
+            final long ONE_MEGABYTE = 1024 * 1024;
+            profileRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                    profilePic.setImageBitmap(Bitmap.createScaledBitmap(bmp, profilePic.getWidth(),
+                            profilePic.getHeight(), false));
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+
         profilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if(username.getText().toString().equals(userName)) {
+                if(previousAct.equals("MainMenu")) {
                     showFileChooser();
-                //}else{
-                    Toast.makeText(getApplicationContext(), "nope", Toast.LENGTH_SHORT).show();
-                //}
+                }
             }
         });
     }
@@ -132,8 +161,12 @@ public class YourProfileActivity extends AppCompatActivity {
         }
     }
     private void retrieveUserData() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String currentID = user.getUid();
+        String currentID;
+        if(previousAct.equals("MainMenu")){
+            currentID = mAuth.getCurrentUser().getUid();
+        }else{
+            currentID = previousAct;
+        }
         DatabaseReference myUser = userRef.child("Users").child(currentID);
         myUser.addValueEventListener(new ValueEventListener() {
             @Override

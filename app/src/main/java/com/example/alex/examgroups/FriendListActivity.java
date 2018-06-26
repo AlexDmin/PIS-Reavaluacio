@@ -1,6 +1,7 @@
 package com.example.alex.examgroups;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
@@ -160,12 +161,36 @@ public class FriendListActivity extends AppCompatActivity{
 
 
                 }else{
+                    DatabaseReference friendRef = db.getReference("Users");
+                    friendRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot ds: dataSnapshot.getChildren()){
+                                if(ds.child("Username").getValue().equals(friendName)){
+                                    friendKey = ds.getKey();
+                                    openProfileActivity(friendKey);
+                                }
+                            }
+                        }
 
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
         });
 
     }
+    public void openProfileActivity(String key){
+        Intent intent = new Intent(this, YourProfileActivity.class);
+        Bundle b = new Bundle();
+        b.putString("previousAct", key);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
+
     public static boolean getActive() {
         return active;
     }
