@@ -75,7 +75,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(this, NewExamActivity.class));
                 break;
             case R.id.topics_button:
-                startActivity(new Intent(this, SearchByTopicActivity.class));
+                startActivity(new Intent(this, IndividualTopicsActivity.class));
                 break;
             case R.id.new_topic_button:
                 startActivity(new Intent(this, NewTopicActivity.class));
