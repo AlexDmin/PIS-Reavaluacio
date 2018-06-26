@@ -6,6 +6,7 @@ import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,7 +29,8 @@ public class FriendListActivity extends AppCompatActivity{
     private ArrayList<String> friends;
     private ArrayAdapter<String> adapter;
     private EditText friendInput;
-
+    private String function, exam, friendKey;
+    public static boolean active;
 
     private FirebaseAuth mAuth;
     private com.google.firebase.database.FirebaseDatabase db;
@@ -36,6 +38,10 @@ public class FriendListActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
+
+        Bundle b = getIntent().getExtras();
+        function = b.getString("function");
+        exam = b.getString("exam");
 
         friendList = findViewById(R.id.friends_list_view);
         addFriends = findViewById(R.id.add_friend_button);
@@ -126,5 +132,53 @@ public class FriendListActivity extends AppCompatActivity{
             }
         });
 
+        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Object friend = friendList.getItemAtPosition(position);
+                final String friendName = (String)friend;
+                if(function.equals("Add to exam")) {
+                    DatabaseReference friendRef = db.getReference("Users");
+                    friendRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for(DataSnapshot ds: dataSnapshot.getChildren()){
+                                if(ds.child("Username").getValue().equals(friendName)){
+                                    friendKey = ds.getKey();
+                                    DatabaseReference examRef = db.getReference("Exams").child(exam).child("Users").child(friendKey);
+                                    examRef.setValue(friendKey);
+                                    Toast.makeText(getApplicationContext(), "Friend added to " + exam.toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }else{
+
+                }
+            }
+        });
+
+    }
+    public static boolean getActive() {
+        return active;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        active = false;
     }
 }

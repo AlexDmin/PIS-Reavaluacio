@@ -74,6 +74,7 @@ public class YourExamsActivity extends AppCompatActivity {
         examsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ExamTopicActivity.setActive(false);
                 Object exam = examsList.getItemAtPosition(position);
                 final String examName = (String)exam;
                 DatabaseReference examRef = db.getReference("Exams");
@@ -98,7 +99,7 @@ public class YourExamsActivity extends AppCompatActivity {
     }
 
     private void startTopicsActivity(String examName) {
-        if(!ExamInfoActivity.getActive() && !ExamTopicsActivity.getActive() && !ExamTopicActivity.getActive()){
+        if(!ExamInfoActivity.getActive() && !ExamTopicsActivity.getActive() && !ExamTopicActivity.getActive() && !FriendListActivity.getActive()){
             Intent intent = new Intent(this, ExamInfoActivity.class);
             Bundle b = new Bundle();
             b.putString("exam", examName);

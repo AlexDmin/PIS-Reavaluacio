@@ -16,6 +16,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import Controller.Controller;
 
+import static android.view.View.GONE;
+
 /**
  * Created by alex on 11/06/2018.
  * Shows information of the exam.
@@ -24,7 +26,7 @@ import Controller.Controller;
 public class ExamInfoActivity extends AppCompatActivity {
     private Controller controller;
     private TextView name, date, value, classroom, description;
-    private Button viewTopics;
+    private Button viewTopics, setExamAsComplete, invite;
     private String examName;
     private FirebaseDatabase db;
     private FirebaseAuth mAuth;
@@ -44,9 +46,36 @@ public class ExamInfoActivity extends AppCompatActivity {
         classroom = findViewById(R.id.exam_classroom_textView);
         description = findViewById(R.id.exam_description_textView);
         viewTopics = findViewById(R.id.view_topics_button);
+        setExamAsComplete = findViewById(R.id.set_exam_as_complete_button);
+        invite = findViewById(R.id.add_friends_to_exam_button);
 
         mAuth = FirebaseAuth.getInstance();
+        final String userID = mAuth.getCurrentUser().getUid();
+
         db = FirebaseDatabase.getInstance();
+        DatabaseReference adminRef = db.getReference("Exams").child(examName).child("Admin");
+        adminRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.getValue().toString().equals(userID)){
+                    setExamAsComplete.setVisibility(GONE);
+                    invite.setVisibility(GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        invite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFriendListActivity();
+            }
+        });
+
         DatabaseReference examRef = db.getReference("Exams").child(examName);
         examRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,6 +106,17 @@ public class ExamInfoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void openFriendListActivity() {
+        if(!FriendListActivity.getActive()) {
+            Intent intent = new Intent(this, FriendListActivity.class);
+            Bundle b = new Bundle();
+            b.putString("function", "Add to exam");
+            b.putString("exam", examName);
+            intent.putExtras(b);
+            startActivity(intent);
+        }
     }
 
 

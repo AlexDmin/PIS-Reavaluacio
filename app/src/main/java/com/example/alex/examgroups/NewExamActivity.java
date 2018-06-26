@@ -80,6 +80,7 @@ public class NewExamActivity extends AppCompatActivity {
 
         newExam.setValue(newPost);
         newExam.child("Users").child(userID).setValue(userID);
+        newExam.child("Admin").setValue(userID);
 
         finish();
         Intent intent = new Intent(this, MainMenuActivity.class);

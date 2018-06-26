@@ -169,6 +169,7 @@ public class ExamTopicsActivity extends AppCompatActivity{
     protected void onStop() {
         super.onStop();
         active = false;
+
     }
 
     public static boolean getActive() {
