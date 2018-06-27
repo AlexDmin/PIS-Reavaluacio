@@ -1,6 +1,7 @@
 package com.example.alex.examgroups;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
-import Controller.Controller;
 import Model.User;
 
 /**
@@ -23,8 +23,6 @@ import Model.User;
  * Log in screen of the app. Allows the user to log in in the app.
  */
 public class LoginActivity extends AppCompatActivity {
-
-    private Controller controller;
     private Button registerButton, loginButton;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -37,7 +35,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Initialization
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordET = (TextInputEditText) findViewById(R.id.password_textiet);
 
         registerButton = (Button) findViewById(R.id.register_screen_button);
+        //Setting onClickListener for the register button
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginButton = (Button) findViewById(R.id.sign_in_button);
+
+        //Setting onClickListener for the login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Method for singing in
     private void singIn() {
         String email = emailET.getText().toString().trim();
         String password = passwordET.getText().toString().trim();
@@ -83,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //Method for opening the main menu activity
     private void openMainMenuActivity() {
         finish();
         Intent intent = new Intent(this, MainMenuActivity.class);
@@ -90,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    //Method for opening the registration activity
     public void openRegisterActivity() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);

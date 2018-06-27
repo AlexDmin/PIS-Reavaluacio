@@ -23,6 +23,7 @@
     <string name="textiet_username">\u0020\u0020Username</string>
     <string name="textiet_password">\u0020\u0020Password</string>
     <string name="textiet_email">\u0020\u0020Email</string>
+    <string name="textiet_email_label">Email</string>
     <string name="textiet_repeat_password">\u0020\u0020Repeat password</string>
     <string name="textiet_new_topic">\u0020\u0020New topic</string>
     <string name="label_exam_name">Name:</string>
@@ -40,4 +41,9 @@
     <string name="logout_menu_text">Log\u0020out</string>
     <string name="friends_menu_text">Friend\u0020list</string>
     <string name="text_hint">Empty</string>
+    <string name="name_hint">\u0020\u0020 Name</string>
+    <string name="date_hint">\u0020\u0020Date</string>
+    <string name="class_hint">\u0020\u0020Classroom/s</string>
+    <string name="value_hint">\u0020\u0020Value</string>
+    <string name="description_hint">\u0020\u0020Description</string>
 </resources>

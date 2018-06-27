@@ -9,7 +9,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/username_til"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="9dp"
         android:layout_marginEnd="23dp"
         android:layout_marginStart="23dp"
@@ -21,15 +21,15 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/username_textiet"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="match_parent"
             android:background="@android:color/background_light"
-            android:hint="@string/textiet_username" />
+            android:hint="@string/textiet_email" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/password_til"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:layout_marginEnd="23dp"
         android:layout_marginStart="23dp"
@@ -41,15 +41,15 @@
         <android.support.design.widget.TextInputEditText
             android:id="@+id/password_textiet"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="match_parent"
             android:background="@android:color/background_light"
             android:hint="@string/textiet_password" />
     </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/sign_in_textView"
-        android:layout_width="146dp"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
         android:layout_marginTop="94dp"
         android:text="@string/sign_in_text"
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="151dp"
-        android:background="@android:drawable/button_onoff_indicator_on"
+        android:background="@color/colorPrimaryDark"
         android:text="@string/sign_in_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +78,7 @@
         android:id="@+id/register_screen_button"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
-        android:layout_height="26dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"

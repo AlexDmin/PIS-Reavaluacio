@@ -1,10 +1,10 @@
 package com.example.alex.examgroups;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,15 +28,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
-import Controller.Controller;
-
 /**
  * Created by alex on 13/06/2018.
  */
 
 public class YourProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 234;
-    private Controller controller;
     private TextView username, email;
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
@@ -53,7 +49,10 @@ public class YourProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_profile);
+        setTitle("Profile");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Getting info from the previous activity
         Bundle b = getIntent().getExtras();
         previousAct = b.getString("previousAct");
 
@@ -64,15 +63,14 @@ public class YourProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         userRef= db.getReferenceFromUrl("https://exam-groups.firebaseio.com/");
+
+        //Retrieving the user data
         retrieveUserData();
 
-        if(previousAct.equals("MainMenu")) {
-            userkey = mAuth.getCurrentUser().getUid();
-        }else{
-            userkey = previousAct;
-        }
-        userID = mAuth.getCurrentUser().getUid();
+        //Knowing if the user wants to open his profile or a friend profile
+        getUser();
 
+        //Getting the username
         DatabaseReference user = db.getReference("User").child(userID).child("Username");
         user.addValueEventListener(new ValueEventListener() {
             @Override
@@ -86,6 +84,12 @@ public class YourProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Method for selecting a profile pic
+        setProfilePic();
+    }
+
+    //Method for selecting a profile pic
+    private void setProfilePic() {
         storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = FirebaseStorage.getInstance().getReference().child("images/"+ userkey + ".jpg");
 
@@ -118,6 +122,17 @@ public class YourProfileActivity extends AppCompatActivity {
         });
     }
 
+    //Method for knowing if the user wants to open his profile or a friend profile
+    private void getUser() {
+        if(previousAct.equals("MainMenu")) {
+            userkey = mAuth.getCurrentUser().getUid();
+        }else{
+            userkey = previousAct;
+        }
+        userID = mAuth.getCurrentUser().getUid();
+    }
+
+    //Method for showing the file chooser to the user
     private void showFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -125,6 +140,7 @@ public class YourProfileActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent,"Select an image for profile pic"), PICK_IMAGE_REQUEST);
     }
 
+    //Method for uploading the profile pic to de app
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -142,6 +158,7 @@ public class YourProfileActivity extends AppCompatActivity {
         }
     }
 
+    //Method for uploading the profile pic to de firebase
     private void uploadProfilePic(){
         if(pathFile != null) {
             StorageReference riversRef = storageRef.child("images/"+ userkey + ".jpg");
@@ -160,6 +177,8 @@ public class YourProfileActivity extends AppCompatActivity {
                     });
         }
     }
+
+    //Method for getting user data
     private void retrieveUserData() {
         String currentID;
         if(previousAct.equals("MainMenu")){
@@ -184,7 +203,6 @@ public class YourProfileActivity extends AppCompatActivity {
         });
 
     }
-
 
 
 }

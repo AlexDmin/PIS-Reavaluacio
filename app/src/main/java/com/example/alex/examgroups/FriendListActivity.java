@@ -39,11 +39,14 @@ public class FriendListActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
+        setTitle("Friend list");
 
+        //Getting info from previous activity
         Bundle b = getIntent().getExtras();
         function = b.getString("function");
         exam = b.getString("exam");
 
+        //Initialization
         friendList = findViewById(R.id.friends_list_view);
         addFriends = findViewById(R.id.add_friend_button);
         friends = new ArrayList<>();
@@ -54,16 +57,12 @@ public class FriendListActivity extends AppCompatActivity{
         db = com.google.firebase.database.FirebaseDatabase.getInstance();
         String userID = mAuth.getCurrentUser().getUid();
 
+        //Filling friends list
         DatabaseReference userFriendList = db.getReference("Users").child(userID).child("Friends");
         userFriendList.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                adapter.clear();
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String friendUsername = ds.getValue(String.class);
-                    friends.add(friendUsername);
-                }
-                friendList.setAdapter(adapter);
+                fillFriendList(dataSnapshot);
             }
 
 
@@ -73,6 +72,67 @@ public class FriendListActivity extends AppCompatActivity{
             }
         });
 
+        //Method for building and using a dialog
+        buildAlertDialog();
+
+        //Setting onClickListener for friends list
+        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onFriendClick(position);
+            }
+        });
+
+    }
+
+    //This method triggers on listViewClick. It can invite friends to an exam or view a friend's profile.
+    private void onFriendClick(int position) {
+        final Object friend = friendList.getItemAtPosition(position);
+        final String friendName = (String)friend;
+        if(function.equals("Add to exam")) {
+            DatabaseReference friendRef = db.getReference("Users");
+            friendRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+                        if(ds.child("Username").getValue().equals(friendName)){
+                            friendKey = ds.getKey();
+                            DatabaseReference examRef = db.getReference("Exams").child(exam).child("Users").child(friendKey);
+                            examRef.setValue(friendKey);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }else{
+            DatabaseReference friendRef = db.getReference("Users");
+            friendRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+                        if(ds.child("Username").getValue().equals(friendName)){
+                            friendKey = ds.getKey();
+                            Toast.makeText(getApplicationContext(), "Friend added to " + exam.toString(), Toast.LENGTH_SHORT).show();
+                            openProfileActivity(friendKey);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+    //Method for building and using a dialog for adding a friend
+    private void buildAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add firend");
         builder.setIcon(R.drawable.ic_launcher_background);
@@ -97,7 +157,6 @@ public class FriendListActivity extends AppCompatActivity{
                                     userListRef.child(userID).child("Friends").child(ds.getKey()).setValue(friendUser);
                                 }else{
                                     exists = true;
-                                    Toast.makeText(getApplicationContext(), "You can't add yourself (even if you feel lonely)", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -133,56 +192,19 @@ public class FriendListActivity extends AppCompatActivity{
             }
         });
 
-        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Object friend = friendList.getItemAtPosition(position);
-                final String friendName = (String)friend;
-                if(function.equals("Add to exam")) {
-                    DatabaseReference friendRef = db.getReference("Users");
-                    friendRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot ds: dataSnapshot.getChildren()){
-                                if(ds.child("Username").getValue().equals(friendName)){
-                                    friendKey = ds.getKey();
-                                    DatabaseReference examRef = db.getReference("Exams").child(exam).child("Users").child(friendKey);
-                                    examRef.setValue(friendKey);
-                                    Toast.makeText(getApplicationContext(), "Friend added to " + exam.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-                }else{
-                    DatabaseReference friendRef = db.getReference("Users");
-                    friendRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for(DataSnapshot ds: dataSnapshot.getChildren()){
-                                if(ds.child("Username").getValue().equals(friendName)){
-                                    friendKey = ds.getKey();
-                                    openProfileActivity(friendKey);
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-        });
-
     }
+
+    //Method for filling friend list from firebase
+    private void fillFriendList(DataSnapshot dataSnapshot) {
+        adapter.clear();
+        for(DataSnapshot ds : dataSnapshot.getChildren()) {
+            String friendUsername = ds.getValue(String.class);
+            friends.add(friendUsername);
+        }
+        friendList.setAdapter(adapter);
+    }
+
+    //Method for opening profile activity
     public void openProfileActivity(String key){
         Intent intent = new Intent(this, YourProfileActivity.class);
         Bundle b = new Bundle();
@@ -190,6 +212,8 @@ public class FriendListActivity extends AppCompatActivity{
         intent.putExtras(b);
         startActivity(intent);
     }
+
+
 
     public static boolean getActive() {
         return active;

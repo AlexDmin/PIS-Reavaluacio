@@ -13,7 +13,7 @@
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:entries="@android:color/background_dark"
+        android:entries="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/add_topic_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +35,10 @@
 
     <Button
         android:id="@+id/add_topic_button"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:background="#50b93d"
         android:text="@string/button_create_topic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

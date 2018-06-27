@@ -8,11 +8,11 @@
 
     <Button
         android:id="@+id/add_friends_to_exam_button"
-        android:layout_width="104dp"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:text="@string/button_invite"
         app:layout_constraintBaseline_toBaselineOf="@+id/view_topics_button"
         app:layout_constraintEnd_toStartOf="@+id/view_topics_button"
@@ -20,12 +20,12 @@
 
     <Button
         android:id="@+id/set_exam_as_complete_button"
-        android:layout_width="104dp"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:text="@string/button_set_as_complete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,8 +88,8 @@
 
     <TextView
         android:id="@+id/exam_description_label"
-        android:layout_width="0dp"
-        android:layout_height="26dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="7dp"
         android:layout_marginEnd="1dp"
         android:text="@string/label_exam_description"
@@ -97,24 +97,25 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/exam_description_textView"
         app:layout_constraintEnd_toEndOf="@+id/exam_classrooms_label"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/exam_description_textView"
         app:layout_constraintTop_toBottomOf="@+id/exam_classrooms_label" />
 
     <Button
         android:id="@+id/view_topics_button"
-        android:layout_width="104dp"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:text="@string/button_view_topics"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exam_description_textView"
-        app:layout_constraintVertical_bias="0.686" />
+        app:layout_constraintVertical_bias="0.666" />
 
     <TextView
         android:id="@+id/exam_name_textView"
@@ -173,7 +174,7 @@
     <TextView
         android:id="@+id/exam_description_textView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="89dp"
         android:layout_marginEnd="23dp"
         android:layout_marginStart="23dp"
@@ -182,6 +183,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/set_exam_as_complete_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exam_description_label" />
 </android.support.constraint.ConstraintLayout>

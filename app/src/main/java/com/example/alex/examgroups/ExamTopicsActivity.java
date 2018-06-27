@@ -20,8 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import Controller.Controller;
-
 import static android.view.View.GONE;
 
 /**
@@ -29,7 +27,6 @@ import static android.view.View.GONE;
  */
 
 public class ExamTopicsActivity extends AppCompatActivity{
-    private Controller controller;
     private ListView topicsListView;
     private Button addTopic;
     private ArrayList<String> topics;
@@ -37,7 +34,8 @@ public class ExamTopicsActivity extends AppCompatActivity{
     private EditText topicInput;
     private String exam, previousAct;
     public static boolean active = false;
-
+    private DatabaseReference topicsList;
+    private DatabaseReference examRef;
 
     private com.google.firebase.database.FirebaseDatabase db;
 
@@ -45,11 +43,14 @@ public class ExamTopicsActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_topics);
+        setTitle("Exam topics list");
 
+        //Getting info from previous activity
         Bundle b = getIntent().getExtras();
         exam = b.getString("exam");
         previousAct = b.getString("previousAct");
 
+        //Initialization
         topicsListView = findViewById(R.id.exam_topics_ListView);
         addTopic = findViewById(R.id.add_topic_button);
         db = com.google.firebase.database.FirebaseDatabase.getInstance();
@@ -57,20 +58,14 @@ public class ExamTopicsActivity extends AppCompatActivity{
         adapter = new ArrayAdapter<String>(this, R.layout.exam_info, R.id.exam_info_tv, topics);
         topicInput = new EditText(this);
 
-        if(previousAct.equals("oldExams")){
-            addTopic.setVisibility(GONE);
-        }
+        //Setting visibility of buttons in function of the previous activity
+        setVisibilityActivity();
 
-        DatabaseReference topicsList = db.getReference("Exams").child(exam).child("Topics");
+        //Getting exam data from firebase and calling method for setting content
         topicsList.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                adapter.clear();
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String topicName = ds.getKey();
-                    topics.add(topicName);
-                }
-                topicsListView.setAdapter(adapter);
+                fillTopicsList(dataSnapshot);
             }
 
 
@@ -79,32 +74,23 @@ public class ExamTopicsActivity extends AppCompatActivity{
 
             }
         });
+
+        //Setting onClickListener for the listView
         topicsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ExamTopicActivity.setActive(false);
-                Object topic = topicsListView.getItemAtPosition(position);
-                final String topicName = (String)topic;
-                DatabaseReference examRef = db.getReference("Exams").child(exam).child("Topics");
-                examRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            if (ds.getKey().equals(topicName)) {
-                                startTopicActivity(topicName);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                openTopic(position);
             }
 
         });
 
+        //Method for building and using a dialog
+        buildAlertDialog();
+
+    }
+
+    //Method for building and using a dialog
+    private void buildAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add topic");
         builder.setIcon(R.drawable.ic_launcher_background);
@@ -154,6 +140,55 @@ public class ExamTopicsActivity extends AppCompatActivity{
         });
     }
 
+    //Method for opening a topic. It can open topics from the current exams list or from the old exams list
+    private void openTopic(int position) {
+        ExamTopicActivity.setActive(false);
+        Object topic = topicsListView.getItemAtPosition(position);
+        final String topicName = (String)topic;
+        if(previousAct.equals("oldExams")){
+            addTopic.setVisibility(GONE);
+            examRef = db.getReference("Old exams").child(exam).child("Topics");
+        }else{
+            examRef = db.getReference("Exams").child(exam).child("Topics");
+        }
+        examRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (ds.getKey().equals(topicName)) {
+                        startTopicActivity(topicName);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    //Method for filling the topics list
+    private void fillTopicsList(DataSnapshot dataSnapshot) {
+        adapter.clear();
+        for(DataSnapshot ds : dataSnapshot.getChildren()) {
+            String topicName = ds.getKey();
+            topics.add(topicName);
+        }
+        topicsListView.setAdapter(adapter);
+    }
+
+    //Method for setting visibility of buttons depending on previous activity
+    private void setVisibilityActivity() {
+        if(previousAct.equals("oldExams")){
+            addTopic.setVisibility(GONE);
+            topicsList = db.getReference("Old exams").child(exam).child("Topics");
+        }else{
+            topicsList = db.getReference("Exams").child(exam).child("Topics");
+        }
+    }
+
+    //Method for opening TopicActivity
     private void startTopicActivity(String topicName) {
         if (!ExamTopicActivity.getActive()) {
             Intent intent = new Intent(this, ExamTopicActivity.class);
@@ -168,9 +203,9 @@ public class ExamTopicsActivity extends AppCompatActivity{
             intent.putExtras(b);
             startActivity(intent);
         }
-
-
     }
+
+    //Methods for controlling current state of the activity
     @Override
     protected void onStart() {
         super.onStart();

@@ -1,5 +1,6 @@
 package com.example.alex.examgroups;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -27,42 +28,50 @@ public class NewTopicActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_topic);
         exists = false;
+
+        //Initialization
         topic = findViewById(R.id.new_topic_textiet);
         createTopic = findViewById(R.id.create_topic_button);
+        setTitle("New topic");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
-
+        //Setting onClickListener for the create topic button
         createTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExamTopicActivity.setActive(true);
-                final DatabaseReference topicsRef = db.getInstance().getReference().child("Topics");
-                final String topicName = topic.getText().toString();
-                if (!topicName.isEmpty()) {
-                    topicsRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (!dataSnapshot.hasChild(topic.getText().toString())) {
-                                topicsRef.child(topicName).child("Text").setValue("");
-                                Toast.makeText(getApplicationContext(), "Topic created!", Toast.LENGTH_SHORT).show();
-                                exists = true;
-                                finish();
-                            }else if(!exists){
-                                Toast.makeText(getApplicationContext(), "Topic already exists!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }else{
-                    Toast.makeText(getApplicationContext(), "Title can't be empty!", Toast.LENGTH_SHORT).show();
-                }
+                createNewTopic();
             }
         });
 
 
+    }
+
+    //Method for creating a topic and adding it into the firebase
+    private void createNewTopic() {
+        ExamTopicActivity.setActive(true);
+        final DatabaseReference topicsRef = db.getInstance().getReference().child("Topics");
+        final String topicName = topic.getText().toString();
+        if (!topicName.isEmpty()) {
+            topicsRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.hasChild(topic.getText().toString())) {
+                        topicsRef.child(topicName).child("Text").setValue("");
+                        Toast.makeText(getApplicationContext(), "Topic created!", Toast.LENGTH_SHORT).show();
+                        exists = true;
+                        finish();
+                    }else if(!exists){
+                        Toast.makeText(getApplicationContext(), "Topic already exists!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }else{
+            Toast.makeText(getApplicationContext(), "Title can't be empty!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

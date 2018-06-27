@@ -1,6 +1,7 @@
 package com.example.alex.examgroups;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -20,16 +21,12 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import Controller.Controller;
-import Model.User;
-
 /**
  * Created by alex on 11/06/2018.
  * Allows the user to sign up on the app.
  */
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
-    private Controller controller;
     private TextInputEditText email, password, repeatPassword, username;
     private Button registerButton;
     private FirebaseAuth mAuth;
@@ -39,18 +36,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Initialization
         email = (TextInputEditText) findViewById(R.id.email_register_textiet);
         password = (TextInputEditText) findViewById(R.id.password_register_textiet);
         repeatPassword = (TextInputEditText) findViewById(R.id.password_repeat_textiet);
         username = (TextInputEditText) findViewById(R.id.username_register_textiet);
         registerButton = (Button) findViewById(R.id.register_button);
+
+        //Setting the register button onClick method
         registerButton.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
 
     }
 
+    //Method for registering the user
     @Override
     public void onClick(View v) {
         String useremail = this.email.getText().toString().trim();
@@ -95,12 +97,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //Method for opening the login activity
     public void openLoginActivity() {
         finish();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
+    //Method for adding the user info to firebase
     public void addUserToNode(){
         String userID = mAuth.getCurrentUser().getUid();
         String useremail = email.getText().toString().trim();

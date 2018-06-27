@@ -5,9 +5,6 @@
         android:id="@id/profile"
         android:title="@string/profile_menu_text"></item>
     <item
-        android:id="@id/settings"
-        android:title="@string/settings_menu_text"></item>
-    <item
         android:id="@id/friends"
         android:title="@string/friends_menu_text"></item>
     <item

@@ -1,8 +1,8 @@
-package com.example.alex.examgroups;
+package Model;
 
 import java.util.ArrayList;
 
-class Exam {
+public class Exam {
     private String Name, Date, Description, Classroom, Value;
 
     public Exam(){

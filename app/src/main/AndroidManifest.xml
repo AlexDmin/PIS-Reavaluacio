@@ -18,11 +18,12 @@
         </activity>
 
         <activity android:name=".RegisterActivity">
-
+            android:screenOrientation="portrait"
         </activity>
 
         <activity android:name=".ExamInfoActivity">
             android:launchMode = "singleInstance"
+            android:screenOrientation="portrait"
         </activity>
 
         <activity android:name=".ExamTopicActivity">
@@ -33,35 +34,19 @@
             android:launchMode = "singleInstance"
         </activity>
 
-        <activity android:name=".InviteActivity">
-
-        </activity>
-
-        <activity android:name=".InviteByNameActivity">
-
-        </activity>
-
         <activity android:name=".MainMenuActivity">
 
         </activity>
 
         <activity android:name=".NewExamActivity">
-
+            android:screenOrientation="portrait"
         </activity>
 
         <activity android:name=".OldExamsActivity">
 
         </activity>
 
-        <activity android:name=".ProfileActivity">
-
-        </activity>
-
         <activity android:name=".IndividualTopicsActivity">
-
-        </activity>
-
-        <activity android:name=".SettingsActivity">
 
         </activity>
 
@@ -72,10 +57,12 @@
 
         <activity android:name=".YourProfileActivity">
             android:launchMode = "singleInstance"
+            android:screenOrientation="portrait"
         </activity>
 
         <activity android:name=".NewTopicActivity">
             android:launchMode = "singleInstance"
+            android:screenOrientation="portrait"
         </activity>
         <activity android:name=".FriendListActivity">
 

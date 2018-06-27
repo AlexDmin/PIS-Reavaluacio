@@ -10,14 +10,12 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import Controller.Controller;
 /**
  * Created by alex on 09/06/2018.
  * Main menu of the app. Provides the user all the functions.
  */
 
 public class MainMenuActivity extends AppCompatActivity implements View.OnClickListener{
-    private Controller controller;
     FirebaseAuth mAuth;
     private Button myExams, newExam, topics, newTopic, oldExams;
 
@@ -25,7 +23,8 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        
+
+        //Initialization
         findViewById(R.id.your_exams_button).setOnClickListener(this);
         findViewById(R.id.new_exam_button).setOnClickListener(this);
         findViewById(R.id.topics_button).setOnClickListener(this);
@@ -35,19 +34,17 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
     }
 
-
+    //Method for creating an options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    //Method that triggers when the user selects an option. It opens the necessary activity.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.settings){
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        }else if(item.getItemId() == R.id.profile) {
+        if(item.getItemId() == R.id.profile) {
             Intent intent = new Intent(this, YourProfileActivity.class);
             Bundle b = new Bundle();
             b.putString("previousAct", "MainMenu");
@@ -68,6 +65,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
+    //Method that triggers when the user clicks on a button from the main menu activity. It opens the necessary activity.
     @Override
     public void onClick(View v) {
         switch (v.getId()){
