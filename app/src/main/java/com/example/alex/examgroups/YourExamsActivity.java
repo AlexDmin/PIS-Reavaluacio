@@ -114,7 +114,7 @@ public class YourExamsActivity extends AppCompatActivity {
 
     //Method for starting the topics activity of the exam selected
     private void startTopicsActivity(String examName) {
-        if(!ExamInfoActivity.getActive() && !ExamTopicsActivity.getActive() && !ExamTopicActivity.getActive() && !FriendListActivity.getActive()){
+        if(!ExamInfoActivity.getActive() && !ExamTopicsActivity.getActive() && !ExamTopicActivity.getActive() && !FriendListActivity.getActive() &&!NewExamActivity.getActive()){
             Intent intent = new Intent(this, ExamInfoActivity.class);
             Bundle b = new Bundle();
             b.putString("exam", examName);

@@ -31,6 +31,7 @@ public class NewExamActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private User user;
     private FirebaseDatabase db;
+    public static boolean active;
 
 
     @Override
@@ -39,6 +40,7 @@ public class NewExamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_exam);
         setTitle("New exam");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        active = true;
 
         //Initialization
         name = findViewById(R.id.new_exam_nameiet);
@@ -62,51 +64,75 @@ public class NewExamActivity extends AppCompatActivity {
 
     //Method for creating an exam and adding it into the firebase
     public void createExam() {
+        if(active = true) {
+            final String userID = mAuth.getCurrentUser().getUid();
+            final String examName = name.getText().toString().trim();
+            final String examDate = date.getText().toString().trim();
+            final String examValue = value.getText().toString().trim();
+            final String examClassroom = classroom.getText().toString().trim();
+            final String examDescription = description.getText().toString().trim();
 
-        final String userID = mAuth.getCurrentUser().getUid();
-        final String examName = name.getText().toString().trim();
-        final String examDate = date.getText().toString().trim();
-        final String examValue = value.getText().toString().trim();
-        final String examClassroom = classroom.getText().toString().trim();
-        final String examDescription = description.getText().toString().trim();
-
-        final DatabaseReference newExam = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Exams");
-        newExam.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.hasChild(examName)){
-                    Map newPost = new HashMap();
-                    newPost.put("Name", examName);
-                    newPost.put("Date", examDate);
-                    newPost.put("Value", examValue);
-                    newPost.put("Classroom", examClassroom);
-                    newPost.put("Description", examDescription);
+            final DatabaseReference newExam = com.google.firebase.database.FirebaseDatabase.getInstance().getReference();
+            newExam.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.child("Exams").hasChild(examName) && !dataSnapshot.child("Old exams").hasChild(examName)) {
+                        Map newPost = new HashMap();
+                        newPost.put("Name", examName);
+                        newPost.put("Date", examDate);
+                        newPost.put("Value", examValue);
+                        newPost.put("Classroom", examClassroom);
+                        newPost.put("Description", examDescription);
 
 
-                    newExam.child(examName).setValue(newPost);
-                    newExam.child(examName).child("Users").child(userID).setValue(userID);
-                    newExam.child(examName).child("Admin").setValue(userID);
-                    Toast.makeText(getApplicationContext(), "Exam created!", Toast.LENGTH_SHORT).show();
+                        newExam.child("Exams").child(examName).setValue(newPost);
+                        newExam.child("Exams").child(examName).child("Users").child(userID).setValue(userID);
+                        newExam.child("Exams").child(examName).child("Admin").setValue(userID);
+                        Toast.makeText(getApplicationContext(), "Exam created!", Toast.LENGTH_SHORT).show();
+
+                    }
+                    if (!FriendListActivity.getActive() == true) {
+                        startMainMenuActivity();
+                    }
 
                 }
-                if(!FriendListActivity.getActive() == true){
-                    startMainMenuActivity();
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+            });
+        }
 
     }
     public void startMainMenuActivity(){
+
         ExamInfoActivity.setActive(false);
         finish();
         Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
+    }
+
+    //Methods for controlling current state of the activity
+    public static boolean getActive() {
+        return active;
+    }
+
+    public static void setActive(boolean isactive) {
+        active = isactive;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    protected void onStop() {
+        active = false;
+        super.onStop();
+
     }
 
 }

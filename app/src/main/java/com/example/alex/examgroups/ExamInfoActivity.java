@@ -98,6 +98,7 @@ public class ExamInfoActivity extends AppCompatActivity {
         setExamAsComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                NewExamActivity.setActive(false);
                 final DatabaseReference fromExams = db.getReference("Exams").child(examName);
                 final DatabaseReference toOldExams = db.getReference().child("Old exams").child(examName);
 
