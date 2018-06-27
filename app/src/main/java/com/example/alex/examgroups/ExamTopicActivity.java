@@ -27,7 +27,6 @@ public class ExamTopicActivity extends AppCompatActivity {
     private Button edit;
     private TextView title;
     private String topic, exam, previousAct;
-    private KeyListener listener;
     private DatabaseReference topicRef;
     public static boolean active = false;
 
@@ -48,10 +47,7 @@ public class ExamTopicActivity extends AppCompatActivity {
 
         //Initialization
         text = findViewById(R.id.topic_text_iet);
-        listener = text.getKeyListener();
-        text.setKeyListener( null );
-        text.setFocusable( false );
-        text.setCursorVisible(false);
+        text.setEnabled(false);
 
         title = findViewById(R.id.topic_textView);
         edit = findViewById(R.id.edit_text_button);
@@ -65,8 +61,10 @@ public class ExamTopicActivity extends AppCompatActivity {
         //Getting topic data from firebase and calling method for setting content
         if(previousAct.equals("oldExams")){
             topicRef = db.getReference("Old exams").child(exam).child("Topics").child(topic);
-        }else{
+        }else if(previousAct.equals("yourExams")){
             topicRef = db.getReference("Exams").child(exam).child("Topics").child(topic);
+        }else{
+            topicRef = db.getReference("Topics").child(topic);
         }
 
         topicRef.addValueEventListener(new ValueEventListener() {
@@ -93,18 +91,13 @@ public class ExamTopicActivity extends AppCompatActivity {
 
     //Method for enabling or disabling the inputEditText
     private void enableOrDisableTextInputEditText(DatabaseReference topicRef) {
-        if(text.getKeyListener() != null) {
+        if(text.isEnabled()) {
             edit.setText("Edit");
-            text.setKeyListener( null );
-            text.setFocusable( false );
-            text.setCursorVisible(false);
+            text.setEnabled(false);
             String newText = text.getText().toString();
             topicRef.child("Text").setValue(newText);
         }else{
             text.setEnabled(true);
-            text.setKeyListener(listener);
-            text.setFocusable(true);
-            text.setCursorVisible(true);
             edit.setText("Submit");
         }
     }

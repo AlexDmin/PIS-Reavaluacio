@@ -99,6 +99,7 @@ public class FriendListActivity extends AppCompatActivity{
                             friendKey = ds.getKey();
                             DatabaseReference examRef = db.getReference("Exams").child(exam).child("Users").child(friendKey);
                             examRef.setValue(friendKey);
+                            Toast.makeText(getApplicationContext(), "Friend added to " + exam.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -117,7 +118,6 @@ public class FriendListActivity extends AppCompatActivity{
                     for(DataSnapshot ds: dataSnapshot.getChildren()){
                         if(ds.child("Username").getValue().equals(friendName)){
                             friendKey = ds.getKey();
-                            Toast.makeText(getApplicationContext(), "Friend added to " + exam.toString(), Toast.LENGTH_SHORT).show();
                             openProfileActivity(friendKey);
                         }
                     }

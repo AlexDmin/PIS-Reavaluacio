@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,29 +63,46 @@ public class NewExamActivity extends AppCompatActivity {
     //Method for creating an exam and adding it into the firebase
     public void createExam() {
 
-        ExamInfoActivity.setActive(false);
         final String userID = mAuth.getCurrentUser().getUid();
-        String examName = name.getText().toString().trim();
-        String examDate = date.getText().toString().trim();
-        String examValue = value.getText().toString().trim();
-        String examClassroom = classroom.getText().toString().trim();
-        String examDescription = description.getText().toString().trim();
+        final String examName = name.getText().toString().trim();
+        final String examDate = date.getText().toString().trim();
+        final String examValue = value.getText().toString().trim();
+        final String examClassroom = classroom.getText().toString().trim();
+        final String examDescription = description.getText().toString().trim();
 
-        DatabaseReference newExam = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Exams").child(examName);
+        final DatabaseReference newExam = com.google.firebase.database.FirebaseDatabase.getInstance().getReference().child("Exams");
+        newExam.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(examName)){
+                    Map newPost = new HashMap();
+                    newPost.put("Name", examName);
+                    newPost.put("Date", examDate);
+                    newPost.put("Value", examValue);
+                    newPost.put("Classroom", examClassroom);
+                    newPost.put("Description", examDescription);
 
-        Map newPost = new HashMap();
-        newPost.put("Name", examName);
-        newPost.put("Date", examDate);
-        newPost.put("Value", examValue);
-        newPost.put("Classroom", examClassroom);
-        newPost.put("Description", examDescription);
 
+                    newExam.child(examName).setValue(newPost);
+                    newExam.child(examName).child("Users").child(userID).setValue(userID);
+                    newExam.child(examName).child("Admin").setValue(userID);
+                    Toast.makeText(getApplicationContext(), "Exam created!", Toast.LENGTH_SHORT).show();
 
-        newExam.setValue(newPost);
-        newExam.child("Users").child(userID).setValue(userID);
-        newExam.child("Admin").setValue(userID);
-        Toast.makeText(getApplicationContext(), "Exam created!", Toast.LENGTH_SHORT).show();
+                }
+                if(!FriendListActivity.getActive() == true){
+                    startMainMenuActivity();
+                }
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    public void startMainMenuActivity(){
         ExamInfoActivity.setActive(false);
         finish();
         Intent intent = new Intent(this, MainMenuActivity.class);

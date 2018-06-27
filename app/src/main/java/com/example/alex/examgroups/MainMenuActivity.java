@@ -30,6 +30,7 @@ public class MainMenuActivity extends AppCompatActivity implements View.OnClickL
         findViewById(R.id.topics_button).setOnClickListener(this);
         findViewById(R.id.new_topic_button).setOnClickListener(this);
         findViewById(R.id.old_exams_button).setOnClickListener(this);
+        ExamInfoActivity.setActive(false);
 
         mAuth = FirebaseAuth.getInstance();
     }
